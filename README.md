@@ -8,7 +8,20 @@ It uses historical cricket match data from Cricsheet to extract batting, bowling
 ###📌 Key Features:
 
 ✅ Fantasy Team-Based Predictions – Users input two teams, and the model predicts the winning probability.
+
 ✅ Data Processing Pipeline – Converts raw match JSON files into structured datasets.
+
 ✅ Feature Engineering – Aggregates player stats into team-level performance indicators.
+
 ✅ Machine Learning Models – Tests different ML models (Random Forest, XGBoost, Neural Networks) to optimize predictions.
+
 ✅ Web App Integration (Future) – Deploy a web-based interface for user-friendly predictions.
+
+### 🏆 Acknowledgments
+
+📌 Cricsheet.org for match data.
+
+📌 Scikit-Learn, Pandas, Matplotlib for ML & data visualization.
+
+### 📜 License
+This project is open-source under the MIT License.
