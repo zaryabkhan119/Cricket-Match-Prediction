@@ -1,21 +1,18 @@
-# 🏏 Cricket Match Prediction
+# 🏏 Cricket AI Analyst
 Predicting the outcome of cricket matches based on fantasy team player performance using historical data and machine learning.
 
-## 🚀 Project Overview
-This project builds a machine learning model to predict the outcome of a cricket match based on player statistics, team combinations, and match conditions.
-It uses historical cricket match data from Cricsheet to extract batting, bowling, and team performance metrics.
+🚀 Project Overview
+The Cricket Analyst AI employs historical cricket data to deliver detailed statistical insights. It leverages a combination of machine learning models and natural language processing to process and analyze data effectively.
 
-### 📌 Key Features:
+📌 Key Features:
+✅ Detailed Statistical Analysis – Provides extensive stats and analyses on teams, players, and venues based on historical data.
 
-✅ Fantasy Team-Based Predictions – Users input two teams, and the model predicts the winning probability.
+✅ Data-Driven Insights – Uses structured datasets from historical matches to deliver in-depth statistical insights.
 
-✅ Data Processing Pipeline – Converts raw match JSON files into structured datasets.
+✅ Advanced Analytics – Integrates machine learning and natural language understanding to enhance the quality and depth of statistical reporting.
 
-✅ Feature Engineering – Aggregates player stats into team-level performance indicators.
+✅ Match Previews and Historical Reviews – Automatically generates match previews and historical performance analyses, offering fans and analysts detailed breakdowns.
 
-✅ Machine Learning Models – Tests different ML models (Random Forest, XGBoost, Neural Networks) to optimize predictions.
-
-✅ Web App Integration (Future) – Deploy a web-based interface for user-friendly predictions.
 
 ### 🏆 Acknowledgments
 
