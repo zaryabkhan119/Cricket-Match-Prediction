@@ -26,44 +26,53 @@ collection = chroma_client.get_collection(name="cricket_insights")
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2", trust_remote_code=True)
 
 # Query Function
-def query_llm(user_query, top_k=5):
+def query_llm(user_query, top_k=3):
     try:
-        # Retrieve Relevant Insights from ChromaDB
+        # ✅ Encode user query
         query_embedding = embedding_model.encode(user_query).tolist()
         results = collection.query(query_embeddings=[query_embedding], n_results=top_k)
 
         if not results["metadatas"] or not results["metadatas"][0]:
             return "❌ No relevant insights found. Try rephrasing your query."
 
+        # ✅ Extract insights
         retrieved_insights = [result["text"] for result in results["metadatas"][0]]
 
-        # Prepare Prompt for GPT-4
-        formatted_insights = "\n".join(retrieved_insights)
+        # ✅ Soft Filtering: Prioritize Relevant Insights but Keep Some Context
+        primary_insights = [insight for insight in retrieved_insights if any(word in insight.lower() for word in user_query.lower().split())]
+        if not primary_insights:
+            primary_insights = retrieved_insights  # Fall back on general insights
+
+        combined_insights = "\n".join(primary_insights)
+
+        # ✅ Improved Prompt (Less Restrictive)
         prompt = f"""
-        You are a cricket expert AI. Analyze the following retrieved insights and generate a structured response:
+        You are a cricket expert AI. **Use the facts below to answer the user's question as accurately as possible.**
+        If the answer is unclear, provide the best possible explanation.
 
-        {formatted_insights}
+        **Retrieved Facts:**
+        {combined_insights}
 
-        User Question: {user_query}
+        **User Question:** {user_query}
 
-        Instead of repeating the insights directly, provide a well-reasoned summary that explains trends, comparisons, and strategic takeaways.
+        **Fact-based answer with some reasoning. Don't ignore useful context.**
         """
 
-        # Generate Response using GPT-4o
+        # ✅ Generate Response using GPT-4 (Balanced Temperature)
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are a cricket expert."},
+                {"role": "system", "content": "You are a cricket expert providing highly accurate answers."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.5  # ✅ Allow a bit more flexibility
         )
 
-        # Return GPT-4's Response
         return response.choices[0].message.content
 
     except Exception as e:
         return f"❌ Error: {str(e)}"
+
 
 # Streamlit Chatbot UI
 st.set_page_config(page_title="Cricket AI Chatbot", page_icon="🏏")
